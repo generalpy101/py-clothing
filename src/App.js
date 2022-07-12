@@ -1,38 +1,22 @@
-import Directory from "./components/directory/directory.component"
+import Home from "./components/routes/home/home.components"
+import Navigation from "./components/routes/navigation/navigation.component"
+import { Routes, Route } from "react-router-dom"
+import SignIn from "./components/routes/sign-in/sign-in.components"
 
 const App = () => {
-  const categories = [
-    {
-      id: 1,
-      title: "hats",
-      imageUrl: "https://i.ibb.co/cvpntL1/hats.png",
-    },
-    {
-      id: 2,
-      title: "jackets",
-      imageUrl: "https://i.ibb.co/px2tCc3/jackets.png",
-    },
-    {
-      id: 3,
-      title: "sneakers",
-      imageUrl: "https://i.ibb.co/0jqHpnp/sneakers.png",
-    },
-    {
-      id: 4,
-      title: "womens",
-      imageUrl: "https://i.ibb.co/GCCdy8t/womens.png",
-    },
-    {
-      id: 5,
-      title: "mens",
-      imageUrl: "https://i.ibb.co/R70vBrQ/men.png",
-    },
-  ]
-
   return (
-    <div>
-      <Directory categories={categories} />
-    </div>
+    // Routes holds all Route instances for url matching
+    <Routes>
+      {/* Routes can be nested */}
+      {/* When nested, routes will first match parent route and then child routes */}
+      {/* If no child route is matched, route with index=true is returned */}
+      {/* Contents of outlet will go from children of this parent route */}
+      <Route path="/" element={<Navigation />}>
+        {/* Making home index, thus if no subroute is provided after /, it will be rendered */}
+        <Route index element={<Home />} />
+        <Route path="sign-in" element={<SignIn />} />
+      </Route>
+    </Routes>
   )
 }
 
