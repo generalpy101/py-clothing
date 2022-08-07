@@ -1,8 +1,7 @@
 import Home from "./components/routes/home/home.components"
 import Navigation from "./components/routes/navigation/navigation.component"
 import { Routes, Route } from "react-router-dom"
-import SignIn from "./components/routes/sign-in/sign-in.components"
-
+import Authentication from "./components/routes/authentication/authentication.component"
 const App = () => {
   return (
     // Routes holds all Route instances for url matching
@@ -14,7 +13,7 @@ const App = () => {
       <Route path="/" element={<Navigation />}>
         {/* Making home index, thus if no subroute is provided after /, it will be rendered */}
         <Route index element={<Home />} />
-        <Route path="sign-in" element={<SignIn />} />
+        <Route path="auth" element={<Authentication />} />
       </Route>
     </Routes>
   )
