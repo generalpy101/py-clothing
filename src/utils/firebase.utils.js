@@ -7,7 +7,9 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
 } from "firebase/auth";
 import { getFirestore, getDoc, setDoc, doc } from "firebase/firestore";
 
@@ -86,3 +88,16 @@ export const signInAuthUserWithEmailAndPassword = async (email, password) => {
 
   return await signInWithEmailAndPassword(auth, email, password);
 };
+
+export const signOutUser = async () => await signOut(auth);
+
+export const onAuthStateChangedListener = (callback) => onAuthStateChanged(auth,callback)
+/*
+  onAuthStateChanged is a handy listener which listens to change in the auth singleton.
+  This is handy for our login system. We will implement this check on UserContext Provider mount.
+  This function calls a callback function whenever auth singleton is changed. We can leverage 
+  this to subscribe to auth state change event in UserContext which will trigger our callback whenever a
+  state change appears. Callback of this method gets user as its argument.
+  This function returns another function which is used to unsubscribe to this event. We will call that
+  unsubscribe function of UserProvider dismount.
+*/

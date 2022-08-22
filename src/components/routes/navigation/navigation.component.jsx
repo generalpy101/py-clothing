@@ -1,10 +1,21 @@
-import { Fragment } from "react"
-import { Outlet, Link } from "react-router-dom"
+import { Fragment } from "react";
+import { Outlet, Link } from "react-router-dom";
 
-import { ReactComponent as CrwnLogo } from "../../../assets/crown.svg"
-import "./navigation.styles.scss"
+import { ReactComponent as CrwnLogo } from "../../../assets/crown.svg";
+import "./navigation.styles.scss";
+
+import { useContext } from "react";
+import { UserContext } from "../../../contexts/user.context";
+
+import { signOutUser } from "../../../utils/firebase.utils";
 
 const Navigation = () => {
+  const { currentUser } = useContext(UserContext);
+
+  const signOutHandler = async () => {
+    await signOutUser();
+  };
+
   return (
     // Fragment renders to nothing unlike div which renders some empty space
     <Fragment>
@@ -16,9 +27,15 @@ const Navigation = () => {
           <Link className="nav-link" to="/shop">
             SHOP
           </Link>
-          <Link className="nav-link" to="/auth">
-            Sign In
-          </Link>
+          {!currentUser ? (
+            <Link className="nav-link" to="/auth">
+              Sign In
+            </Link>
+          ) : (
+            <span className="nav-link" onClick={signOutHandler}>
+              Sign Out
+            </span>
+          )}
         </div>
       </div>
       {/* Outlet is like an outlet for contents of child routes */}
@@ -27,7 +44,7 @@ const Navigation = () => {
       {/* Here it will render all child routes after our navbar */}
       <Outlet />
     </Fragment>
-  )
-}
+  );
+};
 
-export default Navigation
+export default Navigation;
